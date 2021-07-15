@@ -23,7 +23,7 @@ spec:
     spec:
       # renovate: registryUrl=https://litmuschaos.github.io/litmus-helm/
       chart: kubernetes-chaos
-      version: 2.11.0
+      version: 2.13.0
       sourceRef:
         kind: HelmRepository
         name: litmuschaos
