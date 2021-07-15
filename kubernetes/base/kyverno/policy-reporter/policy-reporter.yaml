@@ -23,7 +23,7 @@ spec:
     spec:
       # renovate: registryUrl=https://fjogeleit.github.io/policy-reporter
       chart: policy-reporter
-      version: 1.8.2
+      version: 1.8.4
       sourceRef:
         kind: HelmRepository
         name: policy-reporter
