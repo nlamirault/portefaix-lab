@@ -45,4 +45,5 @@ resources:
 # Oauth
 - ./oauth2-proxy-charts.yaml
 - ./vouch-proxy-charts.yaml
+- ./hashicorp.yaml
 - ./portefaix-charts.yaml
