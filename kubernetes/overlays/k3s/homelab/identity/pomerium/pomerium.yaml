@@ -26,8 +26,8 @@ spec:
 
     config:
       # routes under this wildcard domain are handled by pomerium
-      rootDomain: 192.168.1.114.nip.io
-      insecure: false
+      rootDomain: homelab.portefaix.xyz
+      insecure: true
       forceGenerateTLS: true
       forceGenerateSigningKey: true
 
@@ -36,6 +36,14 @@ spec:
         kubernetes.io/ingress.class: nginx
         # cert-manager.io/cluster-issuer: letsencrypt-prod
         # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
+    resources:
+      limits:
+        cpu: 300m
+        memory: 200Mi
+      requests:
+        cpu: 50m
+        memory: 50Mi
 
   valuesFrom:
     # - kind: ConfigMap
