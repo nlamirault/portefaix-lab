@@ -20,6 +20,13 @@ metadata:
   namespace: podinfo
 spec:
   values:
+    resources:
+      limits:
+        cpu: 50m
+        memory: 64Mi
+      requests:
+        cpu: 1m
+        memory: 16Mi
     ingress:
       enabled: true
       annotations:

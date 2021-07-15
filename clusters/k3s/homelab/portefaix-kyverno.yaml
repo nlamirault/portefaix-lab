@@ -13,9 +13,16 @@
 # limitations under the License.
 
 ---
-apiVersion: kustomize.config.k8s.io/v1beta1
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
-resources:
-- ../../../../../base/kyverno/policy-reporter
-patchesStrategicMerge:
-- policy-reporter.yaml
+metadata:
+  name: portefaix-kyverno
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./kubernetes/overlays/k3s/homelab/policy/portefaix-kyverno
+  prune: true
+  validation: client

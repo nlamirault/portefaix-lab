@@ -48,9 +48,22 @@ spec:
     cleanupOnFail: true
   timeout: 10m
   values:
+    # TODO: https://github.com/stefanprodan/podinfo/pull/141
     # customLabels:
     #   portefaix.xyz/version: v0.15.0
+    # customAnnotations:
+    #   a8r.io/description: Podinfo application, a Cloud Native application
+    #   a8r.io/owner: portefaix
+    #   a8r.io/bugs: https://github.com/stefanprodan/podinfo/issues
+    #   a8r.io/documentation: https://artifacthub.io/packages/helm/podinfo/podinfo
+    #   a8r.io/repository: https://github.com/stefanprodan/podinfo
+    #   a8r.io/support: https://github.com/stefanprodan/podinfo/issues
 
+    securityContext:
+      # runAsGroup: 2000
+      runAsNonRoot: true
+      # runAsUser: 1000
+      # fsGroup: 2000
     serviceMonitor:
       enabled: true
       additionalLabels:

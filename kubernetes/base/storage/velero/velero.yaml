@@ -23,7 +23,7 @@ spec:
     spec:
       # renovate: registryUrl=https://vmware-tanzu.github.io/helm-charts
       chart: velero
-      version: 2.22.0
+      version: 2.23.1
       sourceRef:
         kind: HelmRepository
         name: vmware-tanzu
@@ -36,23 +36,23 @@ spec:
   #   - name: sealed-secrets
   #     namespace: kube-system
   values:
-    # image:
-    #   repository: velero/velero
-    #   tag: v1.5.2
-    resources:
-      limits:
-        cpu: 100m
-        memory: 100Mi
-      requests:
-        cpu: 50m
-        memory: 50Mi
+    # TODO: https://github.com/vmware-tanzu/helm-charts/pull/281
+    # customAnnotations:
+    #   a8r.io/description: Backup and migrate Kubernetes applications and their persistent volumes
+    #   a8r.io/owner: portefaix
+    #   a8r.io/bugs: https://github.com/vmware-tanzu/velero/issues
+    #   a8r.io/documentation: https://artifacthub.io/packages/helm/vmware-tanzu/velero
+    #   a8r.io/repository: https://github.com/vmware-tanzu/velero
+    #   a8r.io/support: https://github.com/vmware-tanzu/velero/issues
+    # customLabels:
+    #   portefaix.xyz/version: v0.16.0
     serviceAccount:
       server:
         create: true
         name: velero
     metrics:
       enabled: true
-      # todo(nlamirault) No ServiceMonitor in Chart ?
-      # https://github.com/vmware-tanzu/velero/issues/2221
-      # serviceMonitor:
-      #   enabled: true
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          release: kube-prometheus-stack

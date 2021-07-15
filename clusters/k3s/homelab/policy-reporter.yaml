@@ -23,19 +23,19 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/k3s/homelab/kyverno/policy-reporter
+  path: ./kubernetes/overlays/k3s/homelab/policy/policy-reporter
   prune: true
   validation: client
   healthChecks:
     - apiVersion: apps/v1
       kind: Deployment
       name: policy-reporter
-      namespace: kyverno
+      namespace: policy
     - apiVersion: apps/v1
       kind: Deployment
       name: policy-reporter-ui
-      namespace: kyverno
+      namespace: policy
     # - apiVersion: apps/v1
     #   kind: Deployment
     #   name: policy-reporter-kyverno-plugin
-    #   namespace: kyverno
+    #   namespace: policy

@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: master
+    branch: feat/kyverno-policies
   secretRef:
     name: flux-system
   url: ssh://git@github.com/portefaix/portefaix

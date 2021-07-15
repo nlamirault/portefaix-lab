@@ -13,25 +13,9 @@
 # limitations under the License.
 
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
-metadata:
-  name: velero
-  namespace: storage
-  labels:
-    app.kubernetes.io/instance: velero
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: velero
-    # helm.sh/chart: velero-2.14.0
-    release: kube-prometheus-stack
-spec:
-  podMetricsEndpoints:
-  - interval: 30s
-    port: monitoring
-  jobLabel: k8s-app
-  selector:
-    matchLabels:
-      app.kubernetes.io/instance: velero
-      app.kubernetes.io/managed-by: Helm
-      app.kubernetes.io/name: velero
-      # helm.sh/chart: velero-2.14.0
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../../../base/policy/policy-reporter
+patchesStrategicMerge:
+- policy-reporter.yaml
