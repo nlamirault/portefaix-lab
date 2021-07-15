@@ -20,6 +20,26 @@ location = attribute('location', description:'Azure location')
 sa_name = attribute("sa_name")
 
 control "velero-1" do
+  impact 1.0
+
+  title "Ensure resource group exists"
+
+  tag platform: "Azure"
+  tag category: 'ResourceGroup'
+  tag resource: "Velero"
+  tag effort: 0.2
+
+  describe azure_resource_group(name: resource_group) do
+    it { should exist }
+    its('tags') { should include(project: 'portefaix') }
+    its('tags') { should include(service: 'velero') }
+    its('tags') { should include(env: 'dev') }
+    its('tags') { should include("made-by": 'terraform') }
+  end
+end
+
+
+control "velero-2" do
   impact 0.9
 
   title "Ensure storage account exists"

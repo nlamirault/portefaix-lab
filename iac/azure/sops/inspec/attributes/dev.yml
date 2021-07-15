@@ -14,5 +14,5 @@
 
 resourcegroup: portefaix-dev-sops
 location: westeurope
-vault_name: portefaix-dev-sops-tmp
-key_name: portefaix-dev-sops-tmp
+vault_name: portefaix-dev-sops
+key_name: portefaix-dev-sops

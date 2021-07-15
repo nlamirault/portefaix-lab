@@ -20,8 +20,26 @@ location = attribute('location', description:'Azure location')
 vault_name = attribute("vault_name")
 key_name = attribute("key_name")
 
-
 control "sops-1" do
+  impact 1.0
+
+  title "Ensure resource group exists"
+
+  tag platform: "Azure"
+  tag category: 'ResourceGroup'
+  tag resource: "Sops"
+  tag effort: 0.2
+
+  describe azure_resource_group(name: resource_group) do
+    it { should exist }
+    its('tags') { should include(project: 'portefaix') }
+    its('tags') { should include(service: 'sops') }
+    its('tags') { should include(env: 'dev') }
+    its('tags') { should include("made-by": 'terraform') }
+  end
+end
+
+control "sops-2" do
   impact 0.9
 
   title "Ensure key vault exists"

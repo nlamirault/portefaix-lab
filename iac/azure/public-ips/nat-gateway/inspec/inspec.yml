@@ -1,4 +1,4 @@
-# Copyright (C) 2021 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+# Copyright (C) 2020 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resourcegroup: portefaix-dev-vnet
-location: westeurope
-vnet_name: portefaix-dev
-address_space: 10.0.0.0/16
+name: portefaix-aks
+title: Portefaix AKS
+maintainer: Nicolas Lamirault
+copyright: Nicolas Lamirault
+copyright_email: nicolas.lamirault@gmail.com
+license: Apache-2.0
+summary: An InSpec Compliance Profile For AKS
+version: 0.1.0
+inspec_version: '>= 4.18.0'
+depends:
+- name: inspec-azure
+  url: https://github.com/inspec/inspec-azure/archive/v1.37.0.zip
+supports:
+- platform: azure

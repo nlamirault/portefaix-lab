@@ -1,0 +1,300 @@
+# Copyright (C) 2020-2021 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Azure / Inspec
+
+env:
+  CHEF_LICENSE: accept
+  AZURE_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID_DEV }}
+  AZURE_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET_DEV }}
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID_DEV }}
+  AZURE_TENANT_ID: ${{ secrets.ARM_TENANT_ID_DEV }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Environment'
+        required: true
+        default: 'dev'
+
+jobs:
+  azure_cis:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Inspect CIS on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec debug
+      run: make -f hack/azure.mk inspec-azure-debug
+
+    - name: Inspec CIS
+      run: make -f hack/azure.mk inspec-a-cis ENV=${{ github.event.inputs.env }}
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE= ENV=${{ github.event.inputs.env }}
+
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html
+
+  azure_vnet:
+    needs: azure_cis
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Test Portefaix on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE=iac/azure/vnet ENV=${{ github.event.inputs.env }}
+    
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html
+
+  azure_ip_nat_gateway:
+    needs: azure_vnet
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Test Portefaix on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE=iac/azure/public-ips/nat-gateway ENV=${{ github.event.inputs.env }}
+    
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html
+
+  azure_nat_gateway:
+    needs: azure_ip_nat_gateway
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Test Portefaix on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE=iac/azure/nat-gateway ENV=${{ github.event.inputs.env }}
+    
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html
+
+  azure_aks:
+    needs: azure_nat_gateway
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Test Portefaix on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE=iac/azure/aks ENV=${{ github.event.inputs.env }}
+    
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html
+
+  azure_sops:
+    needs: azure_aks
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Test Portefaix on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE=iac/azure/sops ENV=${{ github.event.inputs.env }}
+    
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html
+
+  azure_observability:
+    needs: azure_aks
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Test Portefaix on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE=iac/azure/observability ENV=${{ github.event.inputs.env }}
+    
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html
+
+  azure_velero:
+    needs: azure_aks
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ['2.7']
+    steps:
+    - run: |
+        echo "Test Portefaix on Azure / ${{ github.event.inputs.env }}"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install Chef Inspec
+      run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+    - name: Inspec test 
+      run: make -f hack/azure.mk inspec-azure-test SERVICE=iac/azure/velero ENV=${{ github.event.inputs.env }}
+    
+    - uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: Inspect report
+        path: ./portefaix-${{ github.event.inputs.env }}_scan.html

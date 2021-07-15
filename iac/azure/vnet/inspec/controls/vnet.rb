@@ -17,44 +17,45 @@
 
 resource_group = attribute('resourcegroup', description:'Azure resource group')
 location = attribute('location', description:'Azure location')
+vnet_name = attribute('vnet_name', description:'Virtual network name')
 address_space = attribute('address_space', description:"Virtual network address space")
 
+control 'vnet-1' do
+  impact 1.0
 
-# control 'debug-1' do
-#   impact 1.0
+  title 'Ensure Azure resource group'
 
-#   title 'Ensure Azure resource group'
-
-#   tag platform: 'Azure'
-#   tag category: 'Setup'
-#   tag resource: 'Resource Group'
-#   tag effort: 0.2
-
-#   describe azure_resource_group(name: resourcegroup) do
-#     it { should exist }
-#   end
-
-# end
-
-
-control "vnet-1" do
-  impact 0.9
-
-  title "Ensure location of the virtual network"
-
-  tag platform: "Azure"
-  tag category: 'Logging / Monitoring'
-  tag resource: "VPC"
+  tag platform: 'Azure'
+  tag category: 'ResourceGroup'
+  tag resource: 'VNet'
   tag effort: 0.2
 
-  describe azure_virtual_network(resource_group: resource_group, name: 'portefaix-dev') do
+  describe azure_resource_group(name: resource_group) do
+    it { should exist }
+    its('tags') { should include(project: 'portefaix') }
+    its('tags') { should include(service: 'vnet') }
+    its('tags') { should include(env: 'dev') }
+    its('tags') { should include("made-by": 'terraform') }
+  end
+
+end
+
+
+control "vnet-2" do
+  impact 0.9
+
+  title "Ensure properties of the virtual network"
+
+  tag platform: "Azure"
+  tag category: 'Network'
+  tag resource: "VNet"
+  tag effort: 0.2
+
+  describe azure_virtual_network(resource_group: resource_group, name: vnet_name) do
     it { should exist }
     its('location')  { should eq "#{location}" }
     its('type') { should eq 'Microsoft.Network/virtualNetworks' }
-    its('subnets') { should eq ["#{resource_group}-aks-nodes"] }
     its('address_space') { should eq ["#{address_space}"] }
-    # its('dns_servers') { should eq ["1.1.1.1", "1.0.0.1"] }
-    # its('enable_ddos_protection') { should eq false }
     its('tags') { should include(project: 'portefaix') }
     its('tags') { should include(env: 'dev') }
     its('tags') { should include("made-by": 'terraform') }
@@ -62,22 +63,22 @@ control "vnet-1" do
 
 end
 
-control "vnet-2" do
+control "vnet-3" do
   impact 0.9
 
   title "Ensure properties of a Network Security Group"
 
   tag platform: "Azure"
-  tag category: 'Network'
-  tag resource: "VPC"
+  tag category: 'Network Security Group'
+  tag resource: "VNet"
   tag effort: 0.2
 
-  describe azure_network_security_groups(resource_group: resource_group) do
+  describe azure_network_security_group(resource_group: resource_group, name: "allow-ssh") do
     its('type') { should eq 'Microsoft.Network/networkSecurityGroups' }
     its('security_rules') { should_not be_empty }
-    its('default_security_rules') { should_not be_empty }
-    it { should_not allow_rdp_from_internet }
+    # its('default_security_rules') { should_not be_empty }
     it { should_not allow_ssh_from_internet }
+    it { should_not allow_rdp_from_internet }
     # it { should allow(source_ip_range: '0.0.0.0', destination_port: '22', direction: 'inbound') }
     # it { should allow_in(service_tag: 'Internet', port: %w{1433-1434 1521 4300-4350 5000-6000}) }
   end
