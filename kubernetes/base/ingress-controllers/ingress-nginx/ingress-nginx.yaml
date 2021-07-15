@@ -53,11 +53,11 @@ spec:
         serviceMonitor:
           enabled: true
           additionalLabels:
-            release: kube-prometheus-stack
+            monitoring: portefaix
         # prometheusRule:
         #   enabled: true
         #   additionalLabels:
-        #     release: kube-prometheus-stack
+        #     monitoring: portefaix
         #   rules:
         #   - alert: NGINXConfigFailed
         #     expr: count(nginx_ingress_controller_config_last_reload_successful == 0) > 0

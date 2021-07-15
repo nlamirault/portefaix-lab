@@ -30,13 +30,13 @@ spec:
           resources:
             requests:
               storage: 200Mi
-      # resources:
-      #   limits:
-      #     cpu: 300m
-      #     memory: 800Mi
-      #   requests:
-      #     cpu: 100m
-      #     memory: 400Mi
+      resources:
+        limits:
+          cpu: 300m
+          memory: 800Mi
+        requests:
+          cpu: 100m
+          memory: 400Mi
 
     query:
       enabled: true

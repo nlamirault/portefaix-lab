@@ -21,17 +21,19 @@ metadata:
 spec:
   decryption:
     provider: sops
+    secretRef:
+      name: sops-age
   interval: 10m0s
   dependsOn:
     - name: kube-prometheus-stack-crd
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/prod/monitoring/grafana
+  path: ./kubernetes/overlays/gcp/prod/monitoring/grafana
   prune: true
   validation: client
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
-      kind: HelmRelease
+    - apiVersion: apps/v1
+      kind: StatefulSet
       name: grafana
       namespace: monitoring

@@ -64,8 +64,13 @@ variable "thanos_namespace" {
 }
 
 variable "thanos_service_account" {
-  type        = string
+  type        = list(string)
   description = "The Kubernetes service account"
+}
+
+variable "thanos_sidecar_service_account" {
+  type        = string
+  description = "The Google service account ID of Prometheus"
 }
 
 variable "thanos_enable_kms" {
@@ -76,6 +81,16 @@ variable "thanos_enable_kms" {
 variable "thanos_keyring_location" {
   type        = string
   description = "The KMS keyring location"
+}
+
+variable "thanos_secret_config" {
+  type        = string
+  description = "Thanos configuration"
+}
+
+variable "thanos_secret_labels" {
+  description = "Map of labels to apply to the secret"
+  type        = map(string)
 }
 
 # Loki
@@ -116,6 +131,16 @@ variable "loki_keyring_location" {
   description = "The KMS keyring location"
 }
 
+variable "loki_secret_config" {
+  type        = string
+  description = "Loki configuration"
+}
+
+variable "loki_secret_labels" {
+  description = "Map of labels to apply to the secret"
+  type        = map(string)
+}
+
 # Tempo
 
 variable "tempo_bucket_location" {
@@ -152,6 +177,16 @@ variable "tempo_enable_kms" {
 variable "tempo_keyring_location" {
   type        = string
   description = "The KMS keyring location"
+}
+
+variable "tempo_secret_config" {
+  type        = string
+  description = "Tempo configuration"
+}
+
+variable "tempo_secret_labels" {
+  description = "Map of labels to apply to the secret"
+  type        = map(string)
 }
 
 # Grafana

@@ -21,18 +21,18 @@ metadata:
 spec:
   interval: 10m0s
   dependsOn:
-    # For ServiceMonitor CRD
-    - name: kube-prometheus-stack
-    # For ClusterIssuer
+    - name: kube-prometheus-stack-crd
     - name: cert-manager
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/prod/cert-manager/letsencrypt
+  path: ./kubernetes/overlays/gcp/prod/cert-manager/letsencrypt
   prune: true
   validation: client
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
-      kind: HelmRelease
-      name: letsencrypt
-      namespace: cert-manager
+    - apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      name: letsencrypt-prod
+    - apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      name: letsencrypt-test

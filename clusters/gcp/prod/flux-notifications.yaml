@@ -19,6 +19,10 @@ metadata:
   name: flux-system-notifications
   namespace: flux-system
 spec:
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   interval: 10m0s
   # dependsOn:
   # - name: sealed-secrets
@@ -26,8 +30,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/prod/flux-system/notifications
+  path: ./kubernetes/overlays/gcp/prod/flux-system/notifications
   prune: true
   validation: client
-  decryption:
-    provider: sops

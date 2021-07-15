@@ -1,0 +1,125 @@
+# Copyright (C) 2021 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: logging
+spec:
+  values:
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: portefaix-prod-loki@portefaix-prod.iam.gserviceaccount.com
+
+    # persistence:
+    #   enabled: false
+    #   accessModes:
+    #   - ReadWriteOnce
+    #   size: 1Gi
+    #   annotations: {}
+      # selector:
+      #   matchLabels:
+      #     app.kubernetes.io/name: loki
+      # subPath: ""
+      # existingClaim:
+
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+
+    config:
+      auth_enabled: false
+      ingester:
+        chunk_idle_period: 3m
+        chunk_block_size: 262144
+        chunk_retain_period: 1m
+        max_transfer_retries: 0
+        lifecycler:
+          ring:
+            kvstore:
+              store: inmemory
+            replication_factor: 1
+
+          ## Different ring configs can be used. E.g. Consul
+          # ring:
+          #   store: consul
+          #   replication_factor: 1
+          #   consul:
+          #     host: "consul:8500"
+          #     prefix: ""
+          #     http_client_timeout: "20s"
+          #     consistent_reads: true
+      limits_config:
+        enforce_metric_name: false
+        reject_old_samples: true
+        reject_old_samples_max_age: 168h
+
+      schema_config:
+        configs:
+        - from: 2020-10-24
+          store: boltdb-shipper
+          object_store: filesystem
+          schema: v11
+          index:
+            prefix: index_
+            period: 24h
+      server:
+        http_listen_port: 3100
+      storage_config:
+        boltdb_shipper:
+          active_index_directory: /data/loki/boltdb-shipper-active
+          cache_location: /data/loki/boltdb-shipper-cache
+          cache_ttl: 24h         # Can be increased for faster performance over longer query periods, uses more disk space
+          shared_store: filesystem
+        gcs:
+          bucket_name: portefaix-prod-loki
+
+      chunk_store_config:
+        max_look_back_period: 0
+
+      table_manager:
+        chunk_tables_provisioning:
+          inactive_read_throughput: 0
+          inactive_write_throughput: 0
+          provisioned_read_throughput: 0
+          provisioned_write_throughput: 0
+        index_tables_provisioning:
+          inactive_read_throughput: 0
+          inactive_write_throughput: 0
+          provisioned_read_throughput: 0
+          provisioned_write_throughput: 0
+        retention_deletes_enabled: false
+        retention_period: 0
+      compactor:
+        working_directory: /data/loki/boltdb-shipper-compactor
+        shared_store: filesystem
+    # Needed for Alerting: https://grafana.com/docs/loki/latest/alerting/
+    # This is just a simple example, for more details: https://grafana.com/docs/loki/latest/configuration/#ruler_config
+    #  ruler:
+    #    storage:
+    #      type: local
+    #      local:
+    #        directory: /rules
+    #    rule_path: /tmp/scratch
+    #    alertmanager_url: http://alertmanager.svc.namespace:9093
+    #    ring:
+    #      kvstore:
+    #        store: inmemory
+    #    enable_api: true

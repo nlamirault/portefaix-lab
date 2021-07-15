@@ -29,7 +29,7 @@ function helm_values() {
     overlay=$2
     # shellcheck disable=SC2001
     overlay_values=$(echo "${chart}" | sed -e "s#base#overlays/${overlay}#g")
-    # echo ${overlay_values}
+    # echo "${overlay_values}"
 
     tmpfile=$(mktemp)
     if [ ! -f "${overlay_values}" ]; then

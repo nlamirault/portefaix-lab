@@ -14,7 +14,7 @@
 
 module "prometheus" {
   source  = "nlamirault/observability/google//modules/prometheus"
-  version = "4.0.0"
+  version = "4.2.0"
 
   project = var.project
 
@@ -24,7 +24,7 @@ module "prometheus" {
 
 module "thanos" {
   source  = "nlamirault/observability/google//modules/thanos"
-  version = "4.0.0"
+  version = "4.2.0"
 
   project = var.project
 
@@ -32,16 +32,19 @@ module "thanos" {
   bucket_storage_class = var.thanos_bucket_storage_class
   bucket_labels        = var.thanos_bucket_labels
 
-  namespace       = var.thanos_namespace
-  service_account = var.thanos_service_account
+  namespace                  = var.thanos_namespace
+  service_account            = var.thanos_service_account
+  prometheus_service_account = var.thanos_sidecar_service_account
 
   enable_kms       = var.thanos_enable_kms
   keyring_location = var.thanos_keyring_location
+
+  depends_on = [module.prometheus]
 }
 
 module "loki" {
   source  = "nlamirault/observability/google//modules/loki"
-  version = "4.0.0"
+  version = "4.2.0"
 
   project = var.project
 
@@ -58,7 +61,7 @@ module "loki" {
 
 module "tempo" {
   source  = "nlamirault/observability/google//modules/tempo/"
-  version = "4.0.0"
+  version = "4.2.0"
 
   project = var.project
 
@@ -75,7 +78,7 @@ module "tempo" {
 
 module "grafana" {
   source  = "nlamirault/observability/google//modules/grafana/"
-  version = "4.0.0"
+  version = "4.2.0"
 
   project = var.project
 

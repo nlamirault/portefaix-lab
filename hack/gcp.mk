@@ -29,7 +29,8 @@ TF_SA_EMAIL=$(TF_SA)@$(GCP_PROJECT).iam.gserviceaccount.com
 
 # Tags: tags/x.x.x.x
 # Branch: heads/x.x.x.x
-INSPEC_PORTEFAIX_GCP_VERSION = tags/v0.1.2
+# INSPEC_PORTEFAIX_GCP_VERSION = heads/master
+INSPEC_PORTEFAIX_GCP_VERSION = tags/v0.2.0
 INSPEC_PORTEFAIX_GCP = https://github.com/portefaix/portefaix-inspec-gcp/archive/refs/$(INSPEC_PORTEFAIX_GCP_VERSION).zip
 
 
@@ -140,29 +141,29 @@ gcp-kube-credentials: guard-ENV ## Generate credentials
 ##@ Inspec
 
 .PHONY: inspec-gcp-debug
-inspec-gcp-debug: ## Test inspec
+inspec-gcp-debug: ## Debug Inspec
 	@echo -e "$(OK_COLOR)Test infrastructure$(NO_COLOR)"
 	@GOOGLE_AUTH_SUPPRESS_CREDENTIALS_WARNINGS=1 bundle exec inspec detect -t gcp://
 
 .PHONY: inspec-test
-inspec-gcp-test: guard-SERVICE guard-ENV ## Test service
+inspec-gcp-test: guard-SERVICE guard-ENV ## Inspec test a service
 	@echo -e "$(OK_COLOR)Test infrastructure$(NO_COLOR)"
 	@GOOGLE_AUTH_SUPPRESS_CREDENTIALS_WARNINGS=1 bundle exec inspec exec $(SERVICE)/inspec \
 		-t gcp:// --input-file=$(SERVICE)/inspec/attributes/$(ENV).yml \
 		--reporter cli json:$(GCP_PROJECT)_gcp_$(SERVICE).json html:gcp_$(ENV)_$(SERVICE).html
 
-.PHONY: inspec-gcp-portefaix
-inspec-gcp-portefaix: guard-ENV ## Test Portefaix profile
-	@echo -e "$(OK_COLOR)Test infrastructure with Portefaix Inspec profile$(NO_COLOR)"
-	@GOOGLE_AUTH_SUPPRESS_CREDENTIALS_WARNINGS=1 bundle exec inspec exec \
-		$(INSPEC_PORTEFAIX_GCP) \
-		-t gcp:// --input-file=inspec/gcp/attributes/portefaix-$(ENV).yml \
-		--reporter cli json:gcp_$(ENV)_portefaix.json html:gcp_$(ENV)_portefaix.html
-
 .PHONY: inspec-gcp-cis
-inspec-gcp-cis: guard-ENV ## Test CIS profile
+inspec-gcp-cis: guard-ENV ## Execute Inspec CIS profile
 	@echo -e "$(OK_COLOR)Test infrastructure$(NO_COLOR)"
 	@GOOGLE_AUTH_SUPPRESS_CREDENTIALS_WARNINGS=1 bundle exec inspec exec \
 		https://github.com/GoogleCloudPlatform/inspec-gcp-cis-benchmark.git \
 		-t gcp:// --input-file=inspec/gcp/attributes/cis-$(ENV).yml \
 		--reporter cli json:gcp_$(ENV)_csp.json html:gcp_$(ENV)_cis.html
+
+.PHONY: inspec-gcp-portefaix
+inspec-gcp-portefaix: guard-ENV ## Execute Inspec Portefaix profile
+	@echo -e "$(OK_COLOR)Test infrastructure with Portefaix Inspec profile$(NO_COLOR)"
+	@GOOGLE_AUTH_SUPPRESS_CREDENTIALS_WARNINGS=1 bundle exec inspec exec \
+		$(INSPEC_PORTEFAIX_GCP) \
+		-t gcp:// --input-file=inspec/gcp/attributes/portefaix-$(ENV).yml \
+		--reporter cli json:gcp_$(ENV)_portefaix.json html:gcp_$(ENV)_portefaix.html

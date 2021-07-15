@@ -27,7 +27,7 @@ spec:
       version: 0.13.0
       sourceRef:
         kind: HelmRepository
-        name: portefaix
+        name: portefaix-hub
         namespace: flux-system
   releaseName: thanos-mixin
   targetNamespace: monitoring
@@ -49,6 +49,6 @@ spec:
     additionalLabels:
       portefaix.xyz/version: v0.15.0
       app: kube-prometheus-stack
-      release: kube-prometheus-stack
+      monitoring: portefaix
     grafana:
       folder: /tmp/dashboards/monitoring

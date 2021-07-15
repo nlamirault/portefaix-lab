@@ -16,16 +16,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
-  name: flux-monitoring
+  name: flux-system-monitoring
   namespace: flux-system
 spec:
   interval: 10m0s
   dependsOn:
-    # For PodMonitor CRD
-    - name: kube-prometheus-stack
+    - name: kube-prometheus-stack-crd
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/prod/flux-system/monitoring
+  path: ./kubernetes/overlays/gcp/prod/flux-system/monitoring
   prune: true
   validation: client

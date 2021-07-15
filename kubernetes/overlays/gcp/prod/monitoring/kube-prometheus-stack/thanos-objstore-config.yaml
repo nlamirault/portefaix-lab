@@ -1,0 +1,42 @@
+# Copyright (C) 2021 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+data:
+    object-store.yaml: ENC[AES256_GCM,data:rdun+TEi8HwKzh68MJwkXbiFB9mQHZtT1KLlbJ0EE4q+Yc8wBYy3/o63d2THT0WoHKEyKm5g6kcSMsI96n1GVVQOaS/lXMP4oGBkJbMB46IXfjlu3BT6U5crY1TfEpngy4qEey+IK8/t7e3WKX1h9HnaP/2hePtQ1v6JpOyX0lz3yXdgRAJUFG9zL1oJpKqQlrJklhkgqKv/HIDeMpl4bRUfg/HsoGKpDkFHBK+jFr/Kou35Dmi2+Z1YOCVtMQpX5udnk3S0vIrf/Xd6pLj8XoS6tloWQtuOCo8tqNoQMvniHrtpnQZE+0aSeBZcWhkZO88JYiA2oh2M8JOyZGJeQ3s4Xn1BC7FAW1tKn0SBphPYrzPPnh8E6fYHWgkxzLA3Mqg94Vw0jVU97YKO61aFqRvNIEBT9wG9ZV8BME7AqehEwP2LAF6A1I/8uftdZNffMNe90qlt5WwdsJ0AwVxAA7+eB/yd7QOsFoLxz2G2ZsEfYtDWGIJ30EW3v9HADOwScFX0zUrEKVs374+R3W2p/0o1ZGX47p7CZMAlh+jHKJjshvxd+vGrriY3ATGUmRd3LWnIZAB+gnKF7I3+ZDA2QgjVUJj/fefOLa+NWaaxozTeEPuS4KN4ryyS+qTUDl1zPwJR18varvL80Tx/BDBi7gM/Hnod71FsXqlqxn6Wwn5gGS9/USyEKp90zxC+uCu8Kt38+P9mSTyCGv5PC2KBkSVO2OqqN+Whd/kkNEWEu40vlnggnxJvR83WSiisIa2mCAiLz5ODJFrYPjtpxObpI9z0xQcMUcu98x8mnJE408vQ4D3G4BGdK1z4PWDssBSHmbgkgmcS7tYyuDhUyAeD9FzI3IsHwVCrthiobA2QinJfFAtYrRwJz/QS+uSJbo4G40hpFpf9iHwf5aGK1h18FpF6ktTVuWNON4+W3FcMGuUWRIzcu8KqqHriyf37yCko2m67qzzZ6SJahAK5QVL7CizAVzRHgguNNXse5SNopJ+dNnjR5XqW9b3bhgE1g9ulz8Tli1yEMDz4x5VM8xKt6Vt9AFwpFgNHgAH7n9kVdspyS0Qgf4skShpY8wZnqKpSF1T/2wH7khUNi3SHjfVHkC8NSDmz61I9Gw851jcuo2mnu3l7ueUbFAog0yYfYUh8TlyNThOI0Y4UlvYpkzKhXeUi7vDbicNk5DZUSg==,iv:Gnni74AwgQ3yyPYw0AtNAWI4VgCUynCQn/kwORm43mA=,tag:4UUNaArS1kKo6ilHzQQysg==,type:str]
+kind: Secret
+metadata:
+    creationTimestamp: null
+    name: thanos-objstore-config
+    namespace: monitoring
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age177h9wx48t7cu3ycnyf6qzjavwlsdwclz4wj7n8u8uj7k8tthjv8q00kggc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIcVlrdWZRbGwvU25BTFg5
+            Wkx4a0ozQk9hcFk0Mm1kZjQ1WFh1aUxPTVdJCmxnVXVDb25peWdXd2xUOHJjK09C
+            T25tQ1l4K1A4SDVUL2NwK2lxWEl4UmMKLS0tIEZJRVpjN043YXFRVnQ4dTBuZS9p
+            cGc3azdWZzl1MkxiNjlVbGV5Ukk5OHcKu4yEfkFh/8gk3okjccHgYhJvLgJyXb6x
+            bFsuj92wxiIM6n7U6dXq9EEzuecVrpoJHBF2b53F38jY1YG3SuYwZQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-07-12T16:48:43Z"
+    mac: ENC[AES256_GCM,data:qFfVE1/FjoJjDN+/fJAoIJVZbg8OgYLV1xwBcjv6v2ohYBDdxrPIIiPKFqtUTRxhxApsdxoqsvLQcohqaj2T62tXlxQnyk4HAVcYNymNTEcanGbjcYPSVRA7zJLOBRKed653Reh/neo3gtywx3nDYKRlkuG+Ev0veonb7bXqyNI=,iv:4KcwWEC4l5OJyjOj+8PDrbSVYDcLNjV8aiK/09/PO2U=,tag:FYfNS+x2ZNjYKi567G3W+Q==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)
+    version: 3.7.1

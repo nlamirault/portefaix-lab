@@ -27,6 +27,11 @@ output "thanos_service_account" {
   value       = module.thanos.email
 }
 
+output "thanos_sidecar_email" {
+  description = "Service account email for Prometheus Thanos sidecar"
+  value       = module.thanos.sidecar_email
+}
+
 output "loki_bucket" {
   description = "Loki bucket resource"
   value       = module.loki.bucket.name

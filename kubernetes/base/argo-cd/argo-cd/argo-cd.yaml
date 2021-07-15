@@ -68,7 +68,7 @@ spec:
           enabled: true
           interval: 30s
           additionalLabels:
-            release: kube-prometheus-stack
+            monitoring: portefaix
 
     dex:
       enabled: true
@@ -84,7 +84,7 @@ spec:
           enabled: true
           interval: 30s
           additionalLabels:
-            release: kube-prometheus-stack
+            monitoring: portefaix
 
     redis:
       enabled: true
@@ -112,7 +112,7 @@ spec:
           enabled: true
           interval: 30s
           additionalLabels:
-            release: kube-prometheus-stack
+            monitoring: portefaix
       ingress:
         enabled: false
       config:
@@ -136,4 +136,4 @@ spec:
           enabled: true
           interval: 30s
           additionalLabels:
-            release: kube-prometheus-stack
+            monitoring: portefaix

@@ -38,4 +38,4 @@ spec:
     serviceMonitor:
       enabled: true
       labels:
-        release: kube-prometheus-stack
+        monitoring: portefaix

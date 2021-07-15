@@ -19,4 +19,4 @@ resources:
 - ../namespace
 - ./service-account.yaml
 - ./thanos.yaml
-# - ./thanos-mixin.yaml
+- ./thanos-mixin.yaml

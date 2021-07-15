@@ -60,4 +60,4 @@ spec:
       podMonitor:
         enabled: true
         additionalLabels:
-          release: kube-prometheus-stack
+          monitoring: portefaix

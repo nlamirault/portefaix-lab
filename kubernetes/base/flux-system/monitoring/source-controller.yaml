@@ -17,7 +17,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   labels:
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: source-controller
   namespace: flux-system
 spec:

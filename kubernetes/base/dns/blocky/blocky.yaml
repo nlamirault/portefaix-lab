@@ -69,7 +69,7 @@ spec:
         enabled: true
         interval: 30s
         additionalLabels:
-          release: kube-prometheus-stack
+          monitoring: portefaix
 
     config: |
       upstream:

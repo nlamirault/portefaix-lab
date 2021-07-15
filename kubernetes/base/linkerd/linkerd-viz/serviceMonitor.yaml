@@ -23,7 +23,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd-viz
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-viz-metrics-api
   namespace: linkerd-viz
 spec:

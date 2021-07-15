@@ -46,6 +46,8 @@ spec:
     cleanupOnFail: true
   timeout: 10m
   values:
+    commonLabels:
+      portefaix.xyz/version: v0.15.0
 
     # image:
     #   repository: quay.io/thanos/thanos
@@ -54,6 +56,8 @@ spec:
 
     store:
       enabled: true
+      logLevel: info
+      logFormat: json
       dataVolume:
         backend:
           persistentVolumeClaim:
@@ -62,21 +66,19 @@ spec:
         serviceMonitor:
           enabled: true
           labels:
-            release: kube-prometheus-stack
-      resources:
-        limits:
-          cpu: 100m
-          memory: 300Mi
-        requests:
-          cpu: 30m
-          memory: 100Mi
-      serviceAccount: thanos
+            monitoring: portefaix
+      http:
+        ingress:
+          enabled: false
+      serviceAccount: thanos-store
 
     query:
       enabled: true
       stores:
       #  - "dnssrv+_grpc._tcp.<service>.<namespace>.svc.cluster.local"
       - "dnssrv+_grpc._tcp.kube-prometheus-stack-prometheus.monitoring.svc.cluster.local"
+      logLevel: info
+      logFormat: json
       http:
         ingress:
           enabled: false
@@ -84,18 +86,28 @@ spec:
         serviceMonitor:
           enabled: true
           labels:
-            release: kube-prometheus-stack
-      resources:
-        limits:
-          cpu: 200m
-          memory: 1Gi
-        requests:
-          cpu: 100m
-          memory: 400Mi
-      serviceAccount: thanos
+            monitoring: portefaix
+      serviceAccount: thanos-query
+
+    queryFrontend:
+      enabled: true
+      http:
+        ingress:
+          enabled: false
+      log:
+        level: info
+        format: json
+      metrics:
+        serviceMonitor:
+          enabled: true
+          labels:
+            monitoring: portefaix
+      serviceAccount: thanos-query-frontend
 
     compact:
       enabled: true
+      logLevel: info
+      logFormat: json
       dataVolume:
         backend:
           persistentVolumeClaim:
@@ -104,18 +116,13 @@ spec:
         serviceMonitor:
           enabled: true
           labels:
-            release: kube-prometheus-stack
-      resources:
-        limits:
-          cpu: 300m
-          memory: 500Mi
-        requests:
-          cpu: 100m
-          memory: 200Mi
-      serviceAccount: thanos
+            monitoring: portefaix
+      serviceAccount: thanos-compact
 
     bucket:
       enabled: true
+      logLevel: info
+      logFormat: json
       http:
         ingress:
           enabled: false
@@ -123,23 +130,30 @@ spec:
         serviceMonitor:
           enabled: true
           labels:
-            release: kube-prometheus-stack
-      resources:
-        limits:
-          cpu: 200m
-          memory: 300Mi
-        requests:
-          cpu: 100m
-          memory: 100Mi
-      serviceAccount: thanos
+            monitoring: portefaix
+      serviceAccount: thanos-bucket
 
     rule:
-      enabled: false
-      serviceAccount: thanos
-
-    sidecar:
-      enable: true
-      serviceAccount: thanos
+      enabled: rule
+      alertmanagers:
+      - "dnssrv+_grpc._tcp.kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local"
+      logLevel: info
+      logFormat: json
+      http:
+        ingress:
+          enabled: false
+      serviceAccount: thanos-rule
       metrics:
         serviceMonitor:
           enabled: true
+          labels:
+            monitoring: portefaix
+
+    sidecar:
+      enable: true
+      serviceAccount: prometheus-sidecar
+      metrics:
+        serviceMonitor:
+          enabled: true
+          labels:
+            monitoring: portefaix

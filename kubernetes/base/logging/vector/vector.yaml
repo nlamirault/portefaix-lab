@@ -45,7 +45,7 @@ spec:
       podMonitor:
         enabled: true
         # additionalLabels:
-        #   release: kube-prometheus-stack
+        #   monitoring: portefaix
 
     # https://vector.dev/docs/reference/sinks/
     sinks:

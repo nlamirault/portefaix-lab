@@ -1,0 +1,42 @@
+# Copyright (C) 2021 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+data:
+    slack-webhook-url.yaml: ENC[AES256_GCM,data:I9aB2pSvu3YGv5tcttUc+fxLah9WizMm+hryNt/pDCv9b1IFuWvD5dAqftKRmvslVvPKDTpHk+GGG6U7iz3nveXoFWIdEHwhJwFcjWwmdjmPcvYX8z4WedHjS+YunKeZe1JZRvoUDIp+R+Wdw99h42rXUbqUJEuNNwD+aJWQ41TCXKAzYEBfjHfMe8vhzkE0n2vdG9E0WW52fud2kF9esglIsGbuvZVaxcQSjCvfKCgV8us9P6ktjNIJEc7MeTIBhCiDJijLCgx/IAuBsyE3ND4aH50dc7l0pMliCq9Shjp0BwwTs3lvQ6ZkC42JTzPoiqCl+zgGru21CYZFdLrbNUfzLE6Pn0vF0CGLO8ioErDqqVc1CQN03EnwncnHA2jhNa7fZQ6/+Hyrc3MZKKjCJy65qVxFzQKnv+iu//nh8s8GH8c4e/87LAl5X97xI3aChT/ki0Q3Bh1ytugLRMd65tVLlWqgiJ0IOQOaFpWPIJteXis+PykwpCpbGgCBIpp4ApNzvsxc8EFiXS2CLk3nVnTYQLEaacfTaqkCZhoBz5jUAsuPW3/3BSQrYtXDArhlofHHbe3YPQ7kg4XHD+kHq8hTAdY5N1/4cbCMNPkNjEUMCNCRQravE5eC4Ze3vtBEQA1ef5HM98ZAvUNPe8NIb8RYGCTB3yGI5QKQGoPFDrKExaYr+aRb9y0BTMeZ2cYgdHnXmCwm19YEZe/xpgW8gI25zG8qLZEOTCctK25rIZzb8s/Oyon4tHhqSZP46j77Chw//83vV68ljG+mX1QHHm4n3WWaBTDxuO+iWF7vu1eTHlB4VAvDHqfNISb0BppH9CcJCFwFSCRFmbzNL9tfHHU24DYXJEEUCWLykakrx92wHQ2X1CovPV467u7tBf0eKnb9bP7Wh4Zf2VThuZTe75g27mRoe6LY9mmNMvGd3FHXKzKQpuhktgmD3F10AJhCbWIcgp9kRCT+kGfpNYm3KfZMG0vmss1IaMMA4XJ26DVBF3/ylLcvFOAHjUydI/lNDv8nVG+1TEts3dPHD9dxqSgZpN0puq2jBduEQl9gBa1iKZxeMlAi2wssFm/M1s5pziwFjmembCaRLIOuqriz2spedffRXNyPabdGrWNifqVMK8UkSeIIYHsJPOJlZeOlTzQ0lFaEnUc0EGchZtkx7Ls7oOutoJCPVv3rqJMdyc9PM3BS9JYyMn+Xtijmbt/3wEfLyK2WUcIoao1l9ItBU1vEQQbbql1/Wi+KKPwZSuwO/oTab//J2hlMTu27JZMidgOXO/rFkGNhemufJq+5iWKdbrF+4A9Hkf7geBmL1dgjbNf/LtYwVZBTeJZBdbu47jmQ7Ulvh1nKfEmM8c5Sx90LgNQG0lCS1KK3lpXVpsWf0aKPd7IImOS/wG+JiyYFeTXT4w4EoB/UgG/dqcoD87YUr1Zx1fBI8eQMLEsykysnFRmL9uBLqg7QcIqOTYb2cEOxBGQzaNiGeEdXKeR8j9DsvK3mlUo1Q9HHfts/PDeaigY6y3E6CQ==,iv:p7ZMdEWhmPypqmUqwtHbQn/W1uRlLhR5jFDA57tZOc0=,tag:hX/j3t8xbx6tq8zqSiwisw==,type:str]
+kind: Secret
+metadata:
+    creationTimestamp: null
+    name: slack-webhook-url
+    namespace: flux-system
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age177h9wx48t7cu3ycnyf6qzjavwlsdwclz4wj7n8u8uj7k8tthjv8q00kggc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBRcXJQTVVtRVllUWlqSVR0
+            VHZiQ09YMjVrZkhWNnZuekgrd0hUSDAxZXhRCnNQUEV3Qk4zeU5HK0Q5YTIxK05p
+            alA1L09ZRWJ4SndIeksyaG5COTZMVTgKLS0tIGJqdVkrNmt5anN2ODVjeFJsK2Y5
+            Qys2enpOZWZPTkJMajBIMURMK1hDV2cKDOpmjOme4dUsJv2TRa3PPGrlNnheqPip
+            HoGWMPjGDLZewdZFps2JAnzdXSpH8SNqZcOgpgnTId6VbX8J9W08sw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-07-12T17:06:27Z"
+    mac: ENC[AES256_GCM,data:i7bMBooPJ525aefsbGni4xHnzFMnRznOVLe6SxCM2vlh1X5hb11DEzlKhK7069o+MlSlDkLrSGyPqRiXg07I6qIqtWN+cMQxUESJx4pJK6xigRhiIUoTsyNrDmv0AC9NUe8Wd6L8r/sMC8VNrY7sbD4RjdzxfSb/fSjxV00h1FE=,iv:X/XLGRzJu7B2who3EMguUU2sVmvOzmdJ7LgMyfKnldc=,tag:Q3uFfy/mEZBrwpXakN8u2w==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)
+    version: 3.7.1

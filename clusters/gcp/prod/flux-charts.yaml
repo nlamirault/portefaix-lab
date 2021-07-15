@@ -23,6 +23,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/prod/flux-system/charts
+  path: ./kubernetes/overlays/gcp/prod/flux-system/charts
   prune: true
   validation: client

@@ -49,6 +49,6 @@ spec:
     additionalLabels:
       portefaix.xyz/version: v0.15.0
       app: kube-prometheus-stack
-      release: kube-prometheus-stack
+      monitoring: portefaix
     grafana:
       folder: /tmp/dashboards/kubernetes

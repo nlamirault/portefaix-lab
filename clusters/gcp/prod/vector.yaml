@@ -21,14 +21,15 @@ metadata:
 spec:
   decryption:
     provider: sops
+    secretRef:
+      name: sops-age
   interval: 10m0s
   dependsOn:
-    # For ServiceMonitor CRD
-    - name: kube-prometheus-stack
+    - name: kube-prometheus-stack-crd
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/prod/logging/vector
+  path: ./kubernetes/overlays/gcp/prod/logging/vector
   prune: true
   validation: client
   healthChecks:

@@ -42,7 +42,7 @@ spec:
       namespace: kyverno
       serviceMonitor:
         labels:
-          release: kube-prometheus-stack
+          monitoring: portefaix
       grafana:
         dashboards:
           label: grafana-dashboard

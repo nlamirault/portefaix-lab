@@ -59,7 +59,7 @@ spec:
         serviceMonitor:
           enabled: true
           additionalLabels:
-            release: kube-prometheus-stack
+            monitoring: portefaix
 
     containerSecurityContext:
       allowPrivilegeEscalation: false

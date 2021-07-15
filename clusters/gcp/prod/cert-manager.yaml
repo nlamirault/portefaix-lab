@@ -20,17 +20,24 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  # For ServiceMonitor CRD
   dependsOn:
-    - name: kube-prometheus-stack
+    - name: kube-prometheus-stack-crd
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/overlays/prod/cert-manager/cert-manager
+  path: ./kubernetes/overlays/gcp/prod/cert-manager/cert-manager
   prune: true
   validation: client
   healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v1beta1
-      kind: HelmRelease
+    - apiVersion: apps/v1
+      kind: Deployment
       name: cert-manager
+      namespace: cert-manager
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: cert-manager-webhook
+      namespace: cert-manager
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: cert-manager-cainjector
       namespace: cert-manager

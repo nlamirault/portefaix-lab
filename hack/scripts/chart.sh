@@ -16,6 +16,8 @@
 
 manifest=$1
 
+[ -z "${manifest}" ] && echo "HelmRelease file not satisfied" && exit 1
+
 CHART_REPO_URL=$(grep registryUrl "${manifest}" | awk -F"=" '{ print $2 }')
 export CHART_REPO_URL
 CHART_REPO_NAME=$(yq e '.spec.chart.spec.sourceRef.name' "${manifest}")

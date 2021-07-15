@@ -62,4 +62,4 @@ spec:
       interval: 60m
       scrapeTimeout: 60s
       additionalLabels:
-        release: kube-prometheus-stack
+        monitoring: portefaix

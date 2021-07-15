@@ -23,7 +23,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-web
   namespace: linkerd
 spec:
@@ -43,7 +43,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-sp-validator
   namespace: linkerd
 spec:
@@ -63,7 +63,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-controller-api
   namespace: linkerd
 spec:
@@ -83,7 +83,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-identity
   namespace: linkerd
 spec:
@@ -103,7 +103,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-proxy-injector
   namespace: linkerd
 spec:
@@ -123,7 +123,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-tap
   namespace: linkerd
 spec:
@@ -143,7 +143,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-dst
   namespace: linkerd
 spec:
@@ -163,7 +163,7 @@ metadata:
     app.kubernetes.io/part-of: linkerd
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/version: 21.6.1
-    release: kube-prometheus-stack
+    monitoring: portefaix
   name: linkerd-proxies
   namespace: linkerd
 spec:

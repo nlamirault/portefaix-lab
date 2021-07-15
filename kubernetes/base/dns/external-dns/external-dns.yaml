@@ -39,4 +39,4 @@ spec:
       serviceMonitor:
         enabled: true
         selector:
-          release: kube-prometheus-stack
+          monitoring: portefaix

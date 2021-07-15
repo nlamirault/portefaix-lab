@@ -14,4 +14,8 @@
 
 project_id: portefaix-prod
 location: europe-west1-c
-clustername: portefaix-prod-cluster-gke
+
+# Kubernetes
+kubernetes_cluster_name: portefaix-prod-cluster-gke
+kubernetes_location: europe-west1-c
+kubernetes_node_pool_count: 2
